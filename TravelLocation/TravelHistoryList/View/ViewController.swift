@@ -9,27 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    //outlets
     @IBOutlet weak var travelListTableView : UITableView!
-    
+    //initializations
     var locationViewModel = LocationViewModel()
-    
     var locations = [Location]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //fetchsaved location from coredata
         self.locationViewModel.fetchSavedData { (location) in
             self.locations = location
         }
-        
+        // reload tableView
         self.locationViewModel.reloadClosure = {
             self.locationViewModel.fetchSavedData { (location) in
                 self.locations = location
                 self.travelListTableView.reloadData()
             }
         }
-        
+        //update location 
         Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { timer in
             self.locationViewModel.updateLcation()
         }

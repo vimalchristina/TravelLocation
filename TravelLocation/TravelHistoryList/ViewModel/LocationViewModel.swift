@@ -31,11 +31,7 @@ class LocationViewModel: NSObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        
-        var arr = UserDefaults.standard.object(forKey: "SavedArray") as? [String] ?? [String]()
-        arr.append("test")
-        UserDefaults.standard.set(arr, forKey: "SavedArray")
-        
+                
         let userLocation:CLLocation = locations[0] as CLLocation
         print("user latitude = \(userLocation.coordinate.latitude)")
         print("user longitude = \(userLocation.coordinate.longitude)")
@@ -61,7 +57,6 @@ class LocationViewModel: NSObject, CLLocationManagerDelegate {
             let sortedUsers = result!.sorted {
                (Double($0.time ?? "") ?? 00) < (Double($1.time ?? "") ?? 00)
             }
-            
             completionHandler(sortedUsers)
         } catch let error as NSError {
            print(error)
@@ -98,10 +93,5 @@ class LocationViewModel: NSObject, CLLocationManagerDelegate {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         return (formatter.string(from: Date()) as NSString) as String
-    }
-}
-extension Date {
-    func currentTimeMillis() -> Int64 {
-        return Int64(self.timeIntervalSince1970 * 1000)
     }
 }
